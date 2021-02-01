@@ -15,9 +15,13 @@ export default class ExampleCls extends PureComponent {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		document.title = `You clicked ${this.state.count} times`;
-		removeFakeListenr(prevState.id);
-		addFakeListener(this.state.id, this.props.onEffectTest);
+		if (prevState.count !== this.state.count)
+			document.title = `You clicked ${this.state.count} times`;
+
+		if (prevState.id !== this.state.id) {
+			removeFakeListenr(prevState.id);
+			addFakeListener(this.state.id, this.props.onEffectTest);
+		}
   }
 
 	componentWillUnmount() {

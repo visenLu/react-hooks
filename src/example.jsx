@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { addFakeListener, removeFakeListenr, randomString } from './fake-listener';
 
-let timeCounts = 0;
-
 function Example(props) {
   const { onEffectTest } = props;
 
@@ -11,12 +9,12 @@ function Example(props) {
 
   useEffect(() => {
     document.title = `You clicked ${count} times`;
-  });
+  }, [count]);
 
   useEffect(() => {
     addFakeListener(id, onEffectTest);
     return () => removeFakeListenr(id);
-  });
+  }, [id]);
 
   return (
     <div>
