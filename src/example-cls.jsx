@@ -1,34 +1,36 @@
-import React, { PureComponent } from 'react'
-
-let timeCounts = 0;
+import React, { PureComponent } from 'react';
+import { addFakeListener, removeFakeListenr, randomString } from './fake-listener';
 export default class ExampleCls extends PureComponent {
-	timeInterval = null;
-
 	constructor(props) {
 		super(props);
 		this.state = {
 			count: 1,
+			id: randomString(),
 		}
 	}
 
 	componentDidMount() {
-		this.timeInterval = setInterval(() => {
-			timeCounts = timeCounts + this.state.count;
-			this.props.onEffectTest(timeCounts);
-		}, 1000);
+		document.title = `You clicked ${this.state.count} times`;
+		addFakeListener(this.state.id, this.props.onEffectTest);
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		document.title = `You clicked ${this.state.count} times`;
+		removeFakeListenr(prevState.id);
+		addFakeListener(this.state.id, this.props.onEffectTest);
+  }
+
 	componentWillUnmount() {
-		clearInterval(this.timeInterval);
+		removeFakeListenr(this.state.id);
 	}
 
 	render() {
-		const { count } = this.state;
+		const { count, id } = this.state;
 		return (
 			<div>
 				<p>You clicked {count} times</p>
-				<button onClick={() => this.setState(count + 1)}>
-					Click me
+				<button onClick={() => this.setState({ count: count + 1, id: randomString() })}>
+					{id} Click me
 				</button>
 			</div>
 		)
