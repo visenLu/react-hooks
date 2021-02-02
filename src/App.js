@@ -2,11 +2,15 @@ import { useRef, useState, useCallback } from 'react';
 import './App.css';
 import Example from './example';
 import ExampleCls from './example-cls';
+import { randomString } from './fake-listener';
+import Store, { initState } from './store';
 
 function App() {
   const exampleRef = useRef(null);
   const [remove, setRemove] = useState(false);
   const [effectTest, setEffectTest] = useState(0);
+
+  const [store, setStore] = useState(initState);
 
   // const onEffectTest = (value) => setEffectTest(value);
 
@@ -14,20 +18,22 @@ function App() {
     setEffectTest(value)
   }, []);
   return (
-    <div className="App">
-      HOOK TEST
-      <div>Effect hook Test: {effectTest}</div>
-      {!remove && <Example onEffectTest={onEffectTest} ref={exampleRef} />}
+    <Store.Provider value={store}>
+      <div className="App">
+        HOOK TEST
+        <div>Effect hook Test: {store.id} {effectTest}</div>
+        {!remove && <Example onEffectTest={onEffectTest} ref={exampleRef} />}
 
-      <button
-        onClick={() => {
-          // setRemove(!remove);
-          exampleRef.current.setBackground();
-        }}
-      >
-        remove
-      </button>
-    </div>
+        <button
+          onClick={() => {
+            // setRemove(!remove);
+            setStore({ id: randomString() });
+          }}
+        >
+          remove
+        </button>
+      </div>
+    </Store.Provider>
   );
 }
 

@@ -1,20 +1,18 @@
-import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useContext, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { randomString } from './fake-listener';
 import { useDocumentClicked, useFakeListener } from './hooks';
+import LastChildren from './last-children';
+import Store from './store';
 
 const Example = forwardRef((props, ref) => {
   const { onEffectTest } = props;
   const pRef = useRef(null);
 
-  const [id, setId] = useState(randomString());
-  // const [count, setCount] = useState(1);
-  // useEffect(() => {
-  //   document.title = `You clicked ${count} times`;
-  // }, [count]);
+  const store = useContext(Store);
 
   const [count, setCount] = useDocumentClicked(1);
 
-  useFakeListener(id, onEffectTest);
+  useFakeListener(store.id, onEffectTest);
 
   useEffect(() => {
     document.title = `You clicked ${count} times`;
@@ -31,11 +29,12 @@ const Example = forwardRef((props, ref) => {
         onClick={() => {
           pRef.current.style.backgroundColor = 'red';
           setCount(count + 1);
-          setId(randomString());
+          // setId(randomString());
         }}
       >
-        {id} Click me
+        {store.id} Click me
       </button>
+      <LastChildren />
     </div>
   );
 });
