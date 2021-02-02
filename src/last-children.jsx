@@ -5,7 +5,7 @@ export default function LastChildren() {
   const store = useContext(Store);
   return (
     <div>
-      {store && store.id}
+      {store.id}
     </div>
   )
 }

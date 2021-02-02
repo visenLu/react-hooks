@@ -8,7 +8,7 @@ const Example = forwardRef((props, ref) => {
   const { onEffectTest } = props;
   const pRef = useRef(null);
 
-  const store = useContext(Store);
+  const { dispatch, ...store } = useContext(Store);
 
   const [count, setCount] = useDocumentClicked(1);
 
@@ -27,9 +27,9 @@ const Example = forwardRef((props, ref) => {
       <p ref={pRef}>You clicked {count} times</p>
       <button
         onClick={() => {
-          pRef.current.style.backgroundColor = 'red';
-          setCount(count + 1);
-          // setId(randomString());
+          // pRef.current.style.backgroundColor = 'red';
+          // setCount(count + 1);
+          dispatch({ type: 'change', payload: randomString() });
         }}
       >
         {store.id} Click me

@@ -1,16 +1,16 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useReducer } from 'react';
 import './App.css';
 import Example from './example';
 import ExampleCls from './example-cls';
 import { randomString } from './fake-listener';
-import Store, { initState } from './store';
+import Store, { initState, reducer } from './store';
 
 function App() {
   const exampleRef = useRef(null);
   const [remove, setRemove] = useState(false);
   const [effectTest, setEffectTest] = useState(0);
 
-  const [store, setStore] = useState(initState);
+  const [store, dispatch] = useReducer(reducer, initState);
 
   // const onEffectTest = (value) => setEffectTest(value);
 
@@ -18,7 +18,7 @@ function App() {
     setEffectTest(value)
   }, []);
   return (
-    <Store.Provider value={store}>
+    <Store.Provider value={{ ...store, dispatch }}>
       <div className="App">
         HOOK TEST
         <div>Effect hook Test: {store.id} {effectTest}</div>
@@ -27,7 +27,7 @@ function App() {
         <button
           onClick={() => {
             // setRemove(!remove);
-            setStore({ id: randomString() });
+            // dispatch({ id: randomString() });
           }}
         >
           remove
