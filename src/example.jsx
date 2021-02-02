@@ -13,9 +13,10 @@ const Example = forwardRef((props, ref) => {
   }, [count]);
 
   useEffect(() => {
+    console.log('=====onEffectTest changed=====')
     addFakeListener(id, onEffectTest);
     return () => removeFakeListenr(id);
-  }, [id]);
+  }, [onEffectTest]);
 
   useImperativeHandle(ref, () => ({
     setBackground: () => { pRef.current.style.backgroundColor = 'red'; }
