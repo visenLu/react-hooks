@@ -16,7 +16,7 @@ function App() {
       <button
         onClick={() => {
           // setRemove(!remove);
-          exampleRef.current.style.backgroundColor = 'red';
+          exampleRef.current.setBackground();
         }}
       >
         remove
