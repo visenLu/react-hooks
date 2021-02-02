@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { addFakeListener, removeFakeListenr, randomString } from './fake-listener';
+import { addFakeListener, removeFakeListener, randomString } from './fake-listener';
 export default class ExampleCls extends PureComponent {
 	constructor(props) {
 		super(props);
@@ -19,13 +19,13 @@ export default class ExampleCls extends PureComponent {
 			document.title = `You clicked ${this.state.count} times`;
 
 		if (prevState.id !== this.state.id) {
-			removeFakeListenr(prevState.id);
+			removeFakeListener(prevState.id);
 			addFakeListener(this.state.id, this.props.onEffectTest);
 		}
   }
 
 	componentWillUnmount() {
-		removeFakeListenr(this.state.id);
+		removeFakeListener(this.state.id);
 	}
 
 	render() {

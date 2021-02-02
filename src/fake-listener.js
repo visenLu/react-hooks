@@ -19,7 +19,7 @@ export function addFakeListener(name, callBack) {
   timers[name] = timeInterval;
 }
 
-export function removeFakeListenr(name) {
+export function removeFakeListener(name) {
   const { [name]: removeTimer } = timers;
   if (removeTimer)
   clearInterval(removeTimer);
