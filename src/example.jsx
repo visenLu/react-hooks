@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { addFakeListener, removeFakeListenr, randomString } from './fake-listener';
 
-function Example(props) {
+const Example = forwardRef((props, ref) => {
   const { onEffectTest } = props;
-  const pRef = useRef(null);
+  // const pRef = useRef(null);
 
   const [count, setCount] = useState(1);
   const [id, setId] = useState(randomString());
@@ -19,10 +19,10 @@ function Example(props) {
 
   return (
     <div>
-      <p ref={pRef}>You clicked {count} times</p>
+      <p ref={ref}>You clicked {count} times</p>
       <button
         onClick={() => {
-          pRef.current.style.backgroundColor = 'red';
+          // pRef.current.style.backgroundColor = 'red';
           setCount(count + 1);
           setId(randomString());
         }}
@@ -31,6 +31,6 @@ function Example(props) {
       </button>
     </div>
   );
-}
+});
 
 export default Example;
