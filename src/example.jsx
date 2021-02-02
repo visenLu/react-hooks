@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { addFakeListener, removeFakeListenr, randomString } from './fake-listener';
 
 const Example = forwardRef((props, ref) => {
@@ -8,6 +8,18 @@ const Example = forwardRef((props, ref) => {
   const [count, setCount] = useState(1);
   const [id, setId] = useState(randomString());
 
+  // useEffect(() => {
+  //   pRef.current.style.marginTop = '200px';
+  // }, []);
+
+  useLayoutEffect(() => {
+    pRef.current.style.marginTop = '200px';
+  }, []);
+
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  }, [count]);
+
   useEffect(() => {
     document.title = `You clicked ${count} times`;
   }, [count]);
@@ -16,7 +28,7 @@ const Example = forwardRef((props, ref) => {
     console.log('=====onEffectTest changed=====')
     addFakeListener(id, onEffectTest);
     return () => removeFakeListenr(id);
-  }, [onEffectTest]);
+  }, [id]);
 
   useImperativeHandle(ref, () => ({
     setBackground: () => { pRef.current.style.backgroundColor = 'red'; }
